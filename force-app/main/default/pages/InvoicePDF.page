@@ -1,0 +1,61 @@
+<apex:page standardController="Invoice__c" extensions="InvoiceControllerExtension" showHeader="false" sidebar="false" renderAs="PDF" applyHtmlTag="false" applyBodyTag="false">
+    <html>
+        <head>
+            <style>
+            @page{
+                margin: 100px 20px 50px 20px;
+                @top-right{
+                    content : element(header);
+                }
+            }
+            .header{
+                position: running(header);
+                text-align: right;
+            }
+            body{
+                font-family: Arial Unicode MS;
+            }
+            .workshop-cell{
+                padding-left: 10px;
+                padding-right: 10px
+                border: 1px solid #000000;
+                text-align: right;
+            }
+            .header-row th{
+                text-align: center !important;
+                font-weight: bold;
+            }
+            </style>
+        </head>
+        <body>
+            <div>
+                {!Invoice__c.Name}
+            </div>
+            <div>
+                {!Invoice__c.VAT__c}
+            </div>
+            <div class="header">
+                <apex:image value="{!URLFOR($Resource.Nimbuspoint_Images, 'nimbuspoint-logo.png')}"/>
+            </div>
+            <table style="width: 100%; border-spacing: 0px; font-family: Times; border-collapse: collapse;">
+                <thead>
+                    <tr class="HeaderRow">
+                        <th class="workshop-cell">Name</th>
+                        <th class="workshop-cell">Description</th>
+                        <th class="workshop-cell">Amount</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                <apex:repeat value="{!lineItemList}" var="lineItem">
+                    <tr>
+                        <td class="workshop-cell">{!lineItem.Name}</td>
+                        <td class="workshop-cell">{!lineItem.Description__c}</td>
+                        <td class="workshop-cell">{!lineItem.Amount__c}</td>
+                    </tr>
+                </apex:repeat>
+                </tbody>
+            </table>
+        </body>
+    </html>
+</apex:page>

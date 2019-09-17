@@ -1,0 +1,39 @@
+<aura:component implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:attribute name="nazivZavrsnog" type="String"/>
+    <aura:attribute name="mentorZavrsnog" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+    <!-- <aura:attribute name="tehnologijeZavrsnog" type="String"/>  -->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner />
+    </aura:if>
+    <aura:if isTrue="{!!v.saved}">
+        <lightning:recordEditForm
+            onload="{!c.handleLoad}"
+            onsubmit="{!c.handleSubmit}"
+            onsuccess="{!c.handleSuccess}"
+            recordId="{!v.recordId}"
+            objectApiName="Prijava__c">
+            <!-- the messages component is for error messages -->
+            <lightning:messages />
+
+            <lightning:outputField fieldName="Name" value="nazivZavrsnog"/>
+            <lightning:outputField fieldName="Mentor__c" value="mentorZavrsnog"/>
+            <lightning:inputField fieldName="Nacin_Obrane__c" />
+            <lightning:inputField fieldName="Sinopsis__c" />
+
+            <div class="slds-m-top_medium">
+                <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
+            </div>
+        </lightning:recordEditForm>
+        <aura:set attribute="else">
+            <p>Saved! New record id is {!v.recordId}</p>
+        </aura:set>
+    </aura:if>
+
+</aura:component>

@@ -1,0 +1,7 @@
+<aura:component controller="AddLineItemLightningController" implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="recordId" type="String" />
+    <lightning:input aura:id="name" type="text" label="Name"/>
+    <lightning:input aura:id="description" type="text" label="Description"/>
+    <lightning:input aura:id="amount" type="number" label="Amount"/>
+    <lightning:button variant="brand" label="Add Line Item" onclick="{! c.addLineItem }" />
+</aura:component>
